@@ -29,6 +29,14 @@
 1) Open "https://colab.research.google.com/") <br>
 2) Upload "Technical_Task_Parth_Barse.ipynb" file <br>
 3) Run Each Code Cell in that Notebook <br>
-4) We Cannot Connect to Local Database with Google Colab but It works fine with IDE Nethod <br>
+4) We Cannot Connect to Local Database with Google Colab but It works fine with IDE Method <br>
 
 <h3>Now, This will collect Data from given website and store it in Excel, JSON files</h3> <br>
+
+<h1>Scraped Data - </h1>
+1) Excel File :- finalData_1.xlsx <br>
+2) JSON File :- Final_Data.json <br>
+
+<h1>Screenshot of Data in MYSQL Database - </h1>
+
+![Screenshot (273)](https://user-images.githubusercontent.com/91686761/159962471-23421d8a-dd75-42fc-94a7-de7fe43000d6.png)
