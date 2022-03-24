@@ -37,6 +37,9 @@
 1) Excel File :- finalData_1.xlsx <br>
 2) JSON File :- Final_Data.json <br>
 
+<h1>Time Taken to Execute the Complete Code - </h1>
+Time = 1hr (on Google Colab)
+
 <h1>Screenshot of Data in MYSQL Database - </h1>
 
 ![Screenshot (273)](https://user-images.githubusercontent.com/91686761/159962471-23421d8a-dd75-42fc-94a7-de7fe43000d6.png)
