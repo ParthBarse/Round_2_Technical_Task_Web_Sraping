@@ -5,9 +5,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 from sqlalchemy import create_engine
 import pandas as pd
+import openpyxl
 import json
 import time
-
 
 # Function to verify the age -
 
@@ -96,58 +96,57 @@ def get_info(url):
 
 
 # Driver Code -
-if __name__ == "__main__":
 
-    # options = webdriver.ChromeOptions()
-    # options.add_argument('--headless')
-    # options.add_argument('--no-sandbox')
-    # options.add_argument('--disable-dev-shm-usage')                   # For Google Colab   (Uncomment in Google Colab)
+# options = webdriver.ChromeOptions()
+# options.add_argument('--headless')
+# options.add_argument('--no-sandbox')
+# options.add_argument('--disable-dev-shm-usage')                   # For Google Colab   (Uncomment in Google Colab)
 
-    # driver = webdriver.Chrome('chromedriver', options=options)        # For Google Colab   (Uncomment in Google Colab)
+# driver = webdriver.Chrome('chromedriver', options=options)        # For Google Colab   (Uncomment in Google Colab)
 
-    driver = webdriver.Chrome(ChromeDriverManager().install())          # For IDE (Uncomment in IDE)
+driver = webdriver.Chrome(ChromeDriverManager().install())          # For IDE (Uncomment in IDE)
 
-    driver.get("https://cellarbration.com.sg/whiskies.html?product_list_limit=60")
+driver.get("https://cellarbration.com.sg/whiskies.html?product_list_limit=60")
 
-    print(">> ", driver.title)
+print(">> ", driver.title)
 
-    age_verification()
+age_verification()
 
-    finalData = []
-    productLinks = []
+finalData = []
+productLinks = []
 
-    get_links()
+get_links()
 
-    for lnk2 in productLinks:
-        get_info(lnk2)
+for lnk2 in productLinks[0:10]:
+    get_info(lnk2)
 
-        print("Final Data :- ", finalData[-1])
-        print("No of Product Info. :- ", len(finalData))
+    print("Final Data :- ", finalData[-1])
+    print("No of Product Info. :- ", len(finalData))
 
-    driver.quit()
-
-
-    # Saving the Data to Excel Sheet -
-    df = pd.DataFrame.from_dict(finalData)
-    df.to_excel('finalData_1.xlsx')
+driver.quit()
 
 
-    # To Save Data in JSON file -
-    def save_data(title, data):
-      with open(title, 'w', encoding='utf-8') as f:
+# Saving the Data to Excel Sheet -
+df = pd.DataFrame.from_dict(finalData)
+df.to_excel('finalData_1.xlsx')
+
+
+# To Save Data in JSON file -
+def save_data(title, data):
+    with open(title, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-    save_data("Final_Data.json", finalData)
+save_data("Final_Data.json", finalData)
 
 
-    try:
-        # To Store Scraped Data in MYSQL Database -
-        """
-        1) Start MYSQL / PHPMYADMIN Server on Localhost
-        2) Create New Data Base - task_data
-        """
-        engine = create_engine("mysql+pymysql://root:@localhost/task_data")
-        df = pd.read_json("Final_Data_test.json")
-        df.to_sql("scraped_data", con=engine, if_exists="replace", index=False)
-    except:
-        print("Cannot connect to Database")
+try:
+    # To Store Scraped Data in MYSQL Database -
+    """
+    1) Start MYSQL / PHPMYADMIN Server on Localhost
+    2) Create New Data Base - task_data (For Loalhost) or engine = create_engine("mysql+pymysql://<username>:<password>@<hostname>/<Database Name>") for Remote Database)
+    """
+    engine = create_engine("mysql+pymysql://root:@localhost/task_data")
+    df = pd.read_json("Final_Data_test.json")
+    df.to_sql("scraped_data", con=engine, if_exists="replace", index=False)
+except:
+    print("Cannot connect to Database")
