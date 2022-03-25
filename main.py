@@ -117,7 +117,7 @@ productLinks = []
 
 get_links()
 
-for lnk2 in productLinks[0:10]:
+for lnk2 in productLinks:
     get_info(lnk2)
 
     print("Final Data :- ", finalData[-1])
